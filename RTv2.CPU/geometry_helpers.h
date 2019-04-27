@@ -31,9 +31,13 @@ private:
 public:
 	static vector2 get_rectangle_uv(vector3 pt, vector3 vertex0, vector3 u_vec, vector3 v_vec);
 
+	static vector2 get_sphere_uv(vector3 pt, vector3 center, float radius, vector3 vertical_axis);
+
 	static bool intersect_rectangle(int geom_index, texture_map<vector3>& normal_map,const ray& r, intersection& intersect, vector3 vertices[], vector<texture<vector3, MAX_TEXTURE_HEIGHT, MAX_TEXTURE_WIDTH>>& db_texture);
 
 	static bool intersect_triangle(int geom_index, texture_map<vector3>& normal_map, const ray& r, intersection& intersect, vector3 vertices[], vector<texture<vector3, MAX_TEXTURE_HEIGHT, MAX_TEXTURE_WIDTH>>& db_texture);
+
+	static bool intersect_sphere(int geom_index, texture_map<vector3>& normal_map, const ray& r, intersection& intersect, vector3 center, float radius, vector3 vertical_axis, vector<texture<vector3, MAX_TEXTURE_HEIGHT, MAX_TEXTURE_WIDTH>>& db_texture);
 
 };
 #endif

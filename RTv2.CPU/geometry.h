@@ -31,6 +31,7 @@ namespace RTv2
 
 			vector3 _center; //for spheres, cones, and cylinders
 			float _radius; //for spheres
+			vector3 _vertical_axis; //for spheres, cones, and cylinders
 
 			float _height; //for cones and cylinders
 			float _flat_radius; //for cylinders
@@ -63,6 +64,8 @@ namespace RTv2
 			void set_center(vector3 center);
 
 			void set_radius(float radius);
+			
+			void set_vertical_axis(vector3 vertical_axis);
 
 			void set_flat_radius(float flat_radius);
 
@@ -82,7 +85,9 @@ namespace RTv2
 
 			float get_height() const;
 
-			float get_center() const;
+			vector3 get_center() const;
+
+			vector3 get_vertical_axis() const;
 
 			bool intersects(ray r, intersection& intersect, int except_index);
 

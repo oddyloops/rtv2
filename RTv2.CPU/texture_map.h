@@ -55,6 +55,8 @@ public:
 
 	void set_two_texels(texel texel1, texel texel2); //for wavy and checkered texels
 
+	bool get_is_mapped() const;
+
 	T get_texel(intersection& intersect, std::vector<texture<T, MAX_TEXTURE_HEIGHT, MAX_TEXTURE_WIDTH>>& db_texture) const;
 };
 
@@ -227,5 +229,11 @@ T texture_map<T>::get_texel(intersection& intersect, std::vector<texture<T, MAX_
 
 	}
 	
+}
+
+template<typename T>
+bool texture_map<T>::get_is_mapped() const
+{
+	return _is_mapped;
 }
 #endif
