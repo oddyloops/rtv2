@@ -11,7 +11,11 @@ struct vector3
 	float y;
 	float z;
 
+	vector3();
+
+	vector3(float a, float b, float c);
 };
+
 
 
 vector3 operator + (vector3 v1, vector3 v2);

@@ -34,7 +34,8 @@ namespace RTv2
 			vector3 _vertical_axis; //for spheres, cones, and cylinders
 
 			float _height; //for cones and cylinders
-			float _flat_radius; //for cylinders
+			float _top_flat_radius; //for cylinders
+			float _bottom_flat_radius; //for cylinders and cones
 
 			int _material_index; //database index for material
 
@@ -67,7 +68,9 @@ namespace RTv2
 			
 			void set_vertical_axis(vector3 vertical_axis);
 
-			void set_flat_radius(float flat_radius);
+			void set_top_flat_radius(float top_flat_radius);
+
+			void set_bottom_flat_radius(float bottom_flat_radius);
 
 			void set_height(float height);
 
@@ -81,7 +84,9 @@ namespace RTv2
 
 			float get_radius() const;
 
-			float get_flat_radius() const;
+			float get_top_flat_radius() const;
+
+			float get_bottom_flat_radius() const;
 
 			float get_height() const;
 

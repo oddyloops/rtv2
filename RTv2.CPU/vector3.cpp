@@ -1,5 +1,14 @@
 #include "vector3.h"
 
+vector3::vector3() {
+
+}
+
+vector3::vector3(float a, float b, float c) : x(a), y(b), z(c)
+{
+
+}
+
 vector3 operator + (vector3 v1, vector3 v2)
 {
 	vector3 result;

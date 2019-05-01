@@ -152,5 +152,8 @@
     <ClCompile Include="sphere.cpp">
       <Filter>Source Files\objects</Filter>
     </ClCompile>
+    <ClCompile Include="cylinder.cpp">
+      <Filter>Source Files\objects</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

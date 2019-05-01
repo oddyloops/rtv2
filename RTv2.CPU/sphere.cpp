@@ -3,11 +3,17 @@
 vector2 geometry_helpers::get_sphere_uv(vector3 pt, vector3 center, float radius, vector3 vertical_axis)
 {
 	float v = (1 + (math_util::dot(pt - center, vertical_axis) / radius)) * 0.5f;
-	vector3 n = math_util::normalize(pt - center);
-	float u = atan2(n.x, n.z) / (2 * PI) + 0.5;
-	vector2 uv;
-	uv.x = u;
-	uv.y = v;
+	vector3 x_axis = vector3(1,0,0);
+	vector3 z_axis = vector3(0, 0, 1);
+	vector3 x_horizon = math_util::cross(x_axis, vertical_axis);
+	vector3 z_horizon = math_util::cross(z_axis, vertical_axis);
+	
+
+	float x_projection = math_util::dot(pt - center, x_horizon);
+	float z_projection = math_util::dot(pt - center, z_horizon);
+
+	float u = atan2(x_projection, z_projection) / (2 * PI) + 0.5;
+	vector2 uv = vector2(u,v);
 	return uv;
 }
 
