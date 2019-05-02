@@ -9,7 +9,7 @@ struct intersection
 	vector3 _point;
 	float _u;
 	float _v;
-	float _dist;
+	float _dist = FLT_MAX;
 	vector3 _normal; //normal at intersection point
 	int _geom_index = UNINIT;
 	int mesh_index = UNINIT;
