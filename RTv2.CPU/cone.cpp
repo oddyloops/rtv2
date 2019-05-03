@@ -1,20 +1,70 @@
+#include <algorithm>
+
 #include "geometry_helpers.h"
 
-bool geometry_helpers::intersect_cone(int geom_index, texture_map<vector3>& normal_map, const ray& r, intersection& intersect, vector3 center, float radius, vector3 vertical_axis, vector<texture<vector3, MAX_TEXTURE_HEIGHT, MAX_TEXTURE_WIDTH>>& db_texture)
+vector2 geometry_helpers::get_cone_uv(vector3 pt, vector3 center, float radius, vector3 vertical_axis, vector3 true_normal, float height)
+{
+	vector3 delta_pt = pt - center;
+	float u = 0;
+	float v = 0;
+
+	vector3 x_axis = vector3(1, 0, 0);
+	vector3 z_axis = vector3(0, 0, 1);
+
+	vector3 x_horizon = math_util::cross(vertical_axis, z_axis);
+	vector3 z_horizon = math_util::cross(x_axis, vertical_axis);
+
+	float x_projection = 0;
+	float z_projection = 0;
+
+	//tracing a line from the bottom center along the outer surface to the top center
+	float total_texture_height = radius + height;
+
+	//determine if point is on the curved or flat surface
+	float project = math_util::dot(true_normal, vertical_axis);
+	if ((project - 0) < FLT_EPSILON)
+	{
+		//normal perpendicular to the axis means it is on curved surface
+		x_projection = math_util::dot(delta_pt, x_horizon);
+		z_projection = math_util::dot(delta_pt, z_horizon);
+
+		u = atan2(x_projection, z_projection) / (2 * PI) + 0.5;
+		float curve_vert_start = radius / total_texture_height;
+		float curve_vert_span = height / total_texture_height;
+		float curve_pt_fract = math_util::dot(delta_pt, vertical_axis) / height;
+		v = curve_vert_start + curve_pt_fract * curve_vert_span;
+	}
+	else
+	{
+		float flat_vert_span = radius / total_texture_height;
+		x_projection = math_util::dot(delta_pt, x_horizon);
+		z_projection = math_util::dot(delta_pt, z_horizon);
+
+		u = atan2(x_projection, z_projection) / (2 * PI) + 0.5;
+		v = (math_util::magnitude(delta_pt) / radius) * flat_vert_span;
+
+	}
+
+	vector2 uv = vector2(u, v);
+	return uv;
+}
+
+
+bool geometry_helpers::intersect_cone(int geom_index, texture_map<vector3>& normal_map, const ray& r, intersection& intersect, vector3 center, float radius, vector3 vertical_axis, float height, float theta, vector<texture<vector3, MAX_TEXTURE_HEIGHT, MAX_TEXTURE_WIDTH>>& db_texture)
 {
 	float distances[3] = { -1,-1,-1 }; //( bottom, curve 1 , curve 2)
 
 	vector3 pt;
-	
+
 
 	//bottom
-	if (ray_plane_intersection(r, center, -1 * vertical_axis, distances[1]))
+	if (ray_plane_intersection(r, center, -1 * vertical_axis, distances[0]))
 	{
-		pt = r.get_origin() + distances[1] * r.get_dir();
+		pt = r.get_origin() + distances[0] * r.get_dir();
 		if (!inside_circle(pt, center, radius))
 		{
 			//reset distance to default
-			distances[1] = -1;
+			distances[0] = -1;
 		}
 	}
 
@@ -22,11 +72,20 @@ bool geometry_helpers::intersect_cone(int geom_index, texture_map<vector3>& norm
 
 	//curves
 	//get quadratic coefficients
-	vector3 delta_p = r.get_origin() - center;
-	float a = math_util::magnitude_sq(r.get_dir() - (math_util::dot(r.get_dir(), vertical_axis) * vertical_axis));
-	float b = 2 * math_util::dot(r.get_dir() - (math_util::dot(r.get_dir(), vertical_axis) * vertical_axis),
-		delta_p - math_util::dot(delta_p, vertical_axis) * vertical_axis);
-	float c = math_util::magnitude_sq(delta_p - (math_util::dot(delta_p, vertical_axis) * vertical_axis)) - (radius * radius);
+	vector3 apex = center + height * vertical_axis;
+	vector3 delta_p = r.get_origin() - apex;
+	float term1 = powf(cosf(theta  * math_util::magnitude_sq(r.get_dir() - math_util::dot(r.get_dir(), vertical_axis) * vertical_axis)), 2);
+	float term2 = powf(sinf(theta * powf(math_util::dot(r.get_dir(), vertical_axis), 2)), 2);
+	float a = term1 - term2;
+
+	term1 = 2 * powf(cosf(theta * math_util::dot(r.get_dir() - math_util::dot(r.get_dir(), vertical_axis) * vertical_axis,
+		delta_p - math_util::dot(delta_p, vertical_axis) * vertical_axis)), 2);
+	term2 = 2 * powf(sinf(theta * math_util::dot(r.get_dir(), vertical_axis) * math_util::dot(delta_p, vertical_axis)), 2);
+	float b = term1 - term2;
+
+	term1 = powf(cosf(theta * math_util::magnitude_sq(delta_p - math_util::dot(delta_p, vertical_axis) * vertical_axis)), 2);
+	term2 = powf(sinf(theta * powf(math_util::dot(delta_p, vertical_axis), 2)), 2);
+	float c = term1 - term2;
 
 	if (a > 0)
 	{
@@ -38,10 +97,12 @@ bool geometry_helpers::intersect_cone(int geom_index, texture_map<vector3>& norm
 			float x2 = (root + b) / (2 * a);
 
 			/*check if intersection points on the curved infinite cylinder
-			are within bounds of the actual cylinder segment*/
+			are within bounds of the actual cone segment*/
 			vector3 temp_pt = r.get_origin() + x1 * r.get_dir();
 			float project = math_util::dot(temp_pt - center, vertical_axis);
-			if (project < 0 && project > height)
+
+
+			if (project < 0 || project > height)
 			{
 				//out of bounds
 				x1 = -1;
@@ -49,7 +110,7 @@ bool geometry_helpers::intersect_cone(int geom_index, texture_map<vector3>& norm
 
 			temp_pt = r.get_origin() + x2 * r.get_dir();
 			project = math_util::dot(temp_pt - center, vertical_axis);
-			if (project < 0 && project > height)
+			if (project < 0 || project > height)
 			{
 				//out of bounds
 				x2 = -1;
@@ -59,19 +120,19 @@ bool geometry_helpers::intersect_cone(int geom_index, texture_map<vector3>& norm
 			{
 				if (x2 > 0)
 				{
-					distances[2] = std::min(x1, x2);
-					distances[3] = std::max(x1, x2);
+					distances[1] = std::min(x1, x2);
+					distances[2] = std::max(x1, x2);
 				}
 				else
 				{
-					distances[2] = x1;
+					distances[1] = x1;
 				}
 			}
 			else
 			{
 				if (x2 > 0)
 				{
-					distances[2] = x2;
+					distances[1] = x2;
 				}
 			}
 
@@ -80,7 +141,7 @@ bool geometry_helpers::intersect_cone(int geom_index, texture_map<vector3>& norm
 
 	float dist = FLT_MAX; //set to minimum intersection point
 	int distIndex = -1;
-	for (int i = 0; i < 4; i++)
+	for (int i = 0; i < 3; i++)
 	{
 		if (distances[i] >= 0 && distances[i] < dist)
 		{
@@ -102,19 +163,18 @@ bool geometry_helpers::intersect_cone(int geom_index, texture_map<vector3>& norm
 			//compute normal
 			if (distIndex == 0)
 			{
-				//top intersection
-				true_normal = vertical_axis;
-			}
-			else if (distIndex == 1)
-			{
 				//bottom intersection
 				true_normal = -1 * vertical_axis;
 			}
 			else
 			{
 				//curved surface
-				vector3 start_pt = center + math_util::dot(pt - center, vertical_axis) * vertical_axis;
-				true_normal = math_util::normalize(pt - start_pt);
+				float apex_to_pt = math_util::magnitude(pt - delta_p);
+				float height_comp = apex_to_pt / cosf(theta); //distance between apex and start of the normal vector along the vertical axis
+				vector3 normal_start = center + (height - height_comp) * vertical_axis;
+				true_normal = math_util::normalize(pt - normal_start);
+
+
 			}
 
 			vector2 uv = get_cylinder_uv(pt, center, radius, vertical_axis, true_normal, height);

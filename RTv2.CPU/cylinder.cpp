@@ -52,7 +52,6 @@ vector2 geometry_helpers::get_cylinder_uv(vector3 pt, vector3 center, float radi
 			vector3 top_center = center + height * vertical_axis;
 			delta_pt = pt - top_center;
 
-			//perpendicular to the axis means bottom
 			x_projection = math_util::dot(delta_pt, x_horizon);
 			z_projection = math_util::dot(delta_pt, z_horizon);
 
@@ -117,7 +116,7 @@ bool geometry_helpers::intersect_cylinder(int geom_index, texture_map<vector3>& 
 			are within bounds of the actual cylinder segment*/
 			vector3 temp_pt = r.get_origin() + x1 * r.get_dir();
 			float project = math_util::dot(temp_pt - center, vertical_axis);
-			if (project < 0 && project > height)
+			if (project < 0 || project > height)
 			{
 				//out of bounds
 				x1 = -1;
@@ -125,7 +124,7 @@ bool geometry_helpers::intersect_cylinder(int geom_index, texture_map<vector3>& 
 
 			temp_pt = r.get_origin() + x2 * r.get_dir();
 			project = math_util::dot(temp_pt - center, vertical_axis);
-			if (project < 0 && project > height)
+			if (project < 0 || project > height)
 			{
 				//out of bounds
 				x2 = -1;
