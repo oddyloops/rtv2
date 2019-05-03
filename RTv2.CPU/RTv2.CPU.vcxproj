@@ -48,6 +48,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="camera.cpp" />
+    <ClCompile Include="cone.cpp" />
     <ClCompile Include="cylinder.cpp" />
     <ClCompile Include="directional_light.cpp" />
     <ClCompile Include="light.cpp" />

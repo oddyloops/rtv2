@@ -155,5 +155,8 @@
     <ClCompile Include="cylinder.cpp">
       <Filter>Source Files\objects</Filter>
     </ClCompile>
+    <ClCompile Include="cone.cpp">
+      <Filter>Source Files\objects</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
