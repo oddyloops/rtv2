@@ -33,7 +33,8 @@ bool geometry_helpers::intersect_triangle(int geom_index, texture_map<vector3>& 
 				intersect._point = pt;
 				intersect._u = u_area / triangle_area;
 				intersect._v = v_area / triangle_area;
-				intersect._normal = normal_map.get_texel(intersect, db_texture);
+				intersect._normal = normal_map.get_is_mapped() ? normal_map.get_texel(intersect, db_texture)
+					: true_normal;
 
 			}
 			

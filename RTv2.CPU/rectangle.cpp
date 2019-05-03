@@ -37,7 +37,8 @@ bool geometry_helpers::intersect_rectangle(int geom_index, texture_map<vector3>&
 				vector2 uv = get_rectangle_uv(pt, vertices[0], u_vec, v_vec);
 				intersect._u = uv.x;
 				intersect._v = uv.y;
-				intersect._normal = normal_map.get_texel(intersect, db_texture);
+				intersect._normal = normal_map.get_is_mapped() ?  normal_map.get_texel(intersect, db_texture)
+					: true_normal;
 				intersect._dist = dist;
 			}
 		}
