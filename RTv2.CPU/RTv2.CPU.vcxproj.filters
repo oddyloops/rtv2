@@ -158,5 +158,11 @@
     <ClCompile Include="cone.cpp">
       <Filter>Source Files\objects</Filter>
     </ClCompile>
+    <ClCompile Include="geometry.cpp">
+      <Filter>Source Files\objects</Filter>
+    </ClCompile>
+    <ClCompile Include="material.cpp">
+      <Filter>Source Files\objects</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

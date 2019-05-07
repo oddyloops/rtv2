@@ -34,13 +34,13 @@ namespace RTv2
 			vector3 _vertical_axis; //for spheres, cones, and cylinders
 
 			float _height; //for cones and cylinders
-			float _theta; //for cones
+			float _theta = UNINIT; //for cones
 
 			int _material_index; //database index for material
 
 			float _absorption_coeff; //for particle volumes
-
 			float _scatter_coeff; //for particle volumes
+			bool _is_volume = false; //for particle volumes
 
 
 
@@ -75,11 +75,11 @@ namespace RTv2
 
 			float get_scatter_coefficient() const;
 
-			vector3 get_normal_at_intersect(intersection& intersect);
+			bool get_is_volume() const;
 
 			float get_radius() const;
 
-			float get_theta() const;
+			float get_theta();
 
 			float get_height() const;
 

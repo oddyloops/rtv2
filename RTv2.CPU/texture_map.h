@@ -58,6 +58,8 @@ public:
 	bool get_is_mapped() const;
 
 	T get_texel(intersection& intersect, std::vector<texture<T, MAX_TEXTURE_HEIGHT, MAX_TEXTURE_WIDTH>>& db_texture) const;
+
+	bool get_is_null() const;
 };
 
 
@@ -79,6 +81,12 @@ template<typename T>
 texture_map<T>::texture_map(byte map_code) : _map_code(map_code), _is_null(false), _is_projection(false), _is_mapped(true)
 {
 
+}
+
+template<typename T>
+bool texture_map<T>::get_is_null() const
+{
+	return _is_null;
 }
 
 template<typename T>

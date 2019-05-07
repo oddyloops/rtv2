@@ -43,9 +43,15 @@ namespace RTv2
 
 			void set_transparency(texture_map<float> transparency);
 
+			bool get_is_specular();
+
+			bool get_is_reflective();
+
+			bool get_is_refractive();
+
 			vector3 get_ambient_color(intersection& intersect, std::vector<texture<vector3,MAX_TEXTURE_HEIGHT,MAX_TEXTURE_WIDTH>>& db_texture);
 
-			vector3 get_diffuse_color(intersection& intersect, std::vector<texture<vector3, MAX_TEXTURE_HEIGHT, MAX_TEXTURE_WIDTH>>& db_texturee);
+			vector3 get_diffuse_color(intersection& intersect, std::vector<texture<vector3, MAX_TEXTURE_HEIGHT, MAX_TEXTURE_WIDTH>>& db_texture);
 
 			vector3 get_specular_color(intersection& intersect, std::vector<texture<vector3, MAX_TEXTURE_HEIGHT, MAX_TEXTURE_WIDTH>>& db_texture);
 
