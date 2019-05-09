@@ -128,7 +128,7 @@ bool geometry::intersects(ray r, intersection& intersect, int except_index)
 		intersects = geometry_helpers::intersect_cylinder(_index, _normal, r, intersect, _center, _radius, _vertical_axis, _height, _db_vector_textures);
 		break;
 	case geom_codes::cone:
-		intersects = geometry_helpers::intersect_cone(_index, _normal, r, intersect, _center, _radius, _vertical_axis, _height, _db_vector_textures);
+		intersects = geometry_helpers::intersect_cone(_index, _normal, r, intersect, _center, _radius, _vertical_axis, _height,get_theta(),_db_vector_textures);
 		break;
 	}
 
