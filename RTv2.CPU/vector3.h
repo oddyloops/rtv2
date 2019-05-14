@@ -26,5 +26,13 @@ vector3 operator * (float num, vector3 v);
 
 vector3 operator * (int num, vector3 v);
 
+vector3 operator * (vector3 v,float num);
+
+vector3 operator * (vector3 v,int num);
+
+vector3 operator * (vector3 v1, vector3 v2);
+
+
+
 
 #endif 

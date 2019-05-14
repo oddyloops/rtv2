@@ -12,7 +12,8 @@ namespace RTv2
 
 		class visibility
 		{
-			static bool is_visible(ray r, intersection& intersect);
+		public:
+			static bool is_visible(ray r, intersection& intersect, int except_index);
 		};
 	}
 }

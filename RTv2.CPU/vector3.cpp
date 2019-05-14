@@ -45,3 +45,19 @@ vector3 operator * (int num, vector3 v)
 	result.z = num * v.z;
 	return result;
 }
+
+
+vector3 operator * (vector3 v, float num)
+{
+	return vector3(num * v.x, num * v.y, num* v.z);
+}
+
+vector3 operator * (vector3 v, int num)
+{
+	return vector3(num * v.x, num * v.y, num* v.z);
+}
+
+vector3 operator * (vector3 v1, vector3 v2)
+{
+	return vector3(v1.x * v2.x, v1.y * v2.y, v1.z * v2.z);
+}

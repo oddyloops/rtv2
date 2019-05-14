@@ -54,13 +54,15 @@ namespace RTv2
 
 			void set_outer_fov(float fov);
 
-			void set_drop_off_const(float dro_off);
+			void set_drop_off_const(float drop_off);
 
 			vector3 get_color() const;
 
 			vector3 get_origin() const;
 
 			vector3 get_direction() const;
+
+			vector3 get_direction(vector3 pt);
 
 			float get_central_fov() const;
 

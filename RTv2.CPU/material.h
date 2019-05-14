@@ -45,9 +45,7 @@ namespace RTv2
 
 			bool get_is_specular();
 
-			bool get_is_reflective();
-
-			bool get_is_refractive();
+			bool get_is_reflective_refractive();
 
 			vector3 get_ambient_color(intersection& intersect, std::vector<texture<vector3,MAX_TEXTURE_HEIGHT,MAX_TEXTURE_WIDTH>>& db_texture);
 

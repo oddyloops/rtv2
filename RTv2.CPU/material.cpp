@@ -47,15 +47,12 @@ bool material::get_is_specular()
 	return !_specularity.get_is_null();
 }
 
-bool material::get_is_reflective()
+bool material::get_is_reflective_refractive()
 {
-	return !_reflectivity.get_is_null();
+	return !(_reflectivity.get_is_null() || _refractive_index.get_is_null());
 }
 
-bool material::get_is_refractive()
-{
-	return !_refractive_index.get_is_null();
-}
+
 
 vector3 material::get_ambient_color(intersection& intersect, std::vector<texture<vector3, MAX_TEXTURE_HEIGHT, MAX_TEXTURE_WIDTH>>& db_texture)
 {

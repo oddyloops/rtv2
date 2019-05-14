@@ -57,7 +57,15 @@ private:
 		}
 		return intersected;
 	}
+
+
+	
 public:
+
+	static vector3 get_light_dir_from_origin(vector3 pt, vector3 origin)
+	{
+		return math_util::normalize(pt - origin);
+	}
 
 	static vector3 get_directional_light_color(const vector3& direction, const vector3& color, const intersection& intersect, vector<geometry>& db_geometries);
 
@@ -66,6 +74,7 @@ public:
 
 	static vector3 get_spot_light_color(const vector3& origin, const vector3& direction,const vector3& color, const intersection& intersect, vector<geometry>& db_geometries, bool has_range,
 		float max_range, float drop_off_fract, float central_fov, float outer_fov, float drop_off_const);
+
 
 };
 

@@ -58,6 +58,7 @@
     <ClCompile Include="point_light.cpp" />
     <ClCompile Include="ray.cpp" />
     <ClCompile Include="rectangle.cpp" />
+    <ClCompile Include="shader.cpp" />
     <ClCompile Include="sphere.cpp" />
     <ClCompile Include="spot_light.cpp" />
     <ClCompile Include="texel.cpp" />
@@ -65,6 +66,7 @@
     <ClCompile Include="triangle.cpp" />
     <ClCompile Include="vector2.cpp" />
     <ClCompile Include="vector3.cpp" />
+    <ClCompile Include="visibility.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>
