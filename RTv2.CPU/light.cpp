@@ -107,6 +107,9 @@ vector3 light::get_color(const intersection& intersect, vector<geometry>& db_geo
 		return light_helpers::get_directional_light_color(_direction, _color, intersect, db_geometries);
 	case light_code::point:
 		return light_helpers::get_point_light_color(_origin, _color, intersect, db_geometries, _has_range, _max_range, _drop_off_fract);
+	case light_code::spot:
+		return light_helpers::get_spot_light_color(_origin, _direction, _color, intersect, db_geometries, _has_range, _max_range, _drop_off_const,
+			_central_fov, _outer_fov, _drop_off_const);
 	default:
 		break;
 	}

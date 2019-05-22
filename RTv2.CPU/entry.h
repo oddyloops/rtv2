@@ -21,8 +21,13 @@ namespace RTv2
 
 		class entry
 		{
-			static void render(vector<geometry>& geometries, vector<mesh>& meshes, vector<light>& lights, vector<material>& materials, int samples_per_pix,
-				vector<texture<vector3, MAX_TEXTURE_HEIGHT, MAX_TEXTURE_WIDTH>>& vector_textures, vector<texture<float, MAX_TEXTURE_HEIGHT, MAX_TEXTURE_WIDTH>>& scalar_textures);
+		private:
+			template<typename T>
+			static void copy_vector(const vector<T>& from, vector<T>& to);
+		public:
+			static vector<vector<vector3>> render(vector<geometry>& geometries, vector<mesh>& meshes, vector<light>& lights, vector<material>& materials, int samples_per_pix, camera cam, vector3 bg,
+				vector<texture<vector3, MAX_TEXTURE_HEIGHT, MAX_TEXTURE_WIDTH>>& vector_textures, vector<texture<float, MAX_TEXTURE_HEIGHT, MAX_TEXTURE_WIDTH>>& scalar_textures,
+				bool enable_soft_shadow);
 		};
 	}
 }

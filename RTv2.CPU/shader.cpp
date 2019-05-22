@@ -40,11 +40,9 @@ vector3 shader::shade_helper(intersection intersect)
 
 
 
-void shader::shade(intersection& intersect, vector3& color, vector3& visible_map, vector3& depth_map)
+void shader::shade(intersection& intersect, vector3& color,  vector3& depth_map)
 {
-	visible_map.x = 1;
-	visible_map.y = 1;
-	visible_map.z = 1;
+
 
 	float depth = 1 - (intersect._dist / FAR_PLANE);
 	depth_map.x = depth;

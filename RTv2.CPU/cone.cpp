@@ -21,7 +21,7 @@ vector2 geometry_helpers::get_cone_uv(vector3 pt, vector3 center, float radius, 
 	float total_texture_height = radius + height;
 
 	//determine if point is on the curved or flat surface
-	float project = math_util::dot(true_normal, vertical_axis);
+	float project = math_util::dot(delta_pt, vertical_axis);
 	if ((project - 0) < FLT_EPSILON)
 	{
 		//normal perpendicular to the axis means it is on curved surface

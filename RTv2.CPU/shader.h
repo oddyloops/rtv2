@@ -13,7 +13,7 @@ namespace RTv2
 		private:
 			static vector3 shade_helper(intersection intersect);
 		public:
-			static void shade(intersection& intersect, vector3& color, vector3& visible_map, vector3& depth_map);
+			static void shade(intersection& intersect, vector3& color,  vector3& depth_map);
 		};
 	}
 }

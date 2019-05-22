@@ -22,14 +22,14 @@ private:
 		float light_sum = 0;
 		ray light_sample = r;
 		vector3 origin = r.get_origin();
-		float rnd = math_util::rand_range(-0.1, 0.1);
+
 		const int SAMPLE_SIZE = 5;
 		for (int i = 0; i < SAMPLE_SIZE; i++)
 		{
 			vector3 origin_sample;
-			origin_sample.x = origin.x + rnd;
-			origin_sample.y = origin.y + rnd;
-			origin_sample.z = origin.z + rnd;
+			origin_sample.x = origin.x + math_util::rand_range(-1, 1) * _db_camera.get_pixel_width();
+			origin_sample.y = origin.y + math_util::rand_range(-1, 1) * _db_camera.get_pixel_width();
+			origin_sample.z = origin.z + math_util::rand_range(-1, 1) * _db_camera.get_pixel_width();
 			light_sample.set_origin(origin_sample);
 			bool intersected = false;
 			for (size_t j = 0; j < db_geometries.size() && !intersected; j++)
@@ -41,6 +41,7 @@ private:
 			{
 				light_sum += 1;
 			}
+			
 		}
 
 		return light_sum / SAMPLE_SIZE;
