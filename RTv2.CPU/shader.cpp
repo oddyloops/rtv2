@@ -36,6 +36,7 @@ vector3 shader::shade_helper(intersection intersect)
 
 	}
 
+	return color;
 }
 
 

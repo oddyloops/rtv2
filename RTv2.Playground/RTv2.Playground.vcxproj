@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
@@ -18,65 +18,12 @@
       <Platform>x64</Platform>
     </ProjectConfiguration>
   </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="camera.h" />
-    <ClInclude Include="constants.h" />
-    <ClInclude Include="database.h" />
-    <ClInclude Include="entry.h" />
-    <ClInclude Include="geometry.h" />
-    <ClInclude Include="geometry_helpers.h" />
-    <ClInclude Include="geom_codes.h" />
-    <ClInclude Include="indexable.h" />
-    <ClInclude Include="intersection.h" />
-    <ClInclude Include="light.h" />
-    <ClInclude Include="light_codes.h" />
-    <ClInclude Include="light_helpers.h" />
-    <ClInclude Include="map_codes.h" />
-    <ClInclude Include="material.h" />
-    <ClInclude Include="math_util.h" />
-    <ClInclude Include="mesh.h" />
-    <ClInclude Include="ray.h" />
-    <ClInclude Include="shader.h" />
-    <ClInclude Include="texel.h" />
-    <ClInclude Include="texture.h" />
-    <ClInclude Include="texture_map.h" />
-    <ClInclude Include="texture_projector.h" />
-    <ClInclude Include="typedefs.h" />
-    <ClInclude Include="vector2.h" />
-    <ClInclude Include="vector3.h" />
-    <ClInclude Include="visibility.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="camera.cpp" />
-    <ClCompile Include="cone.cpp" />
-    <ClCompile Include="constants.cpp" />
-    <ClCompile Include="cylinder.cpp" />
-    <ClCompile Include="database.cpp" />
-    <ClCompile Include="directional_light.cpp" />
-    <ClCompile Include="entry.cpp" />
-    <ClCompile Include="geometry.cpp" />
-    <ClCompile Include="light.cpp" />
-    <ClCompile Include="material.cpp" />
-    <ClCompile Include="math_util.cpp" />
-    <ClCompile Include="point_light.cpp" />
-    <ClCompile Include="ray.cpp" />
-    <ClCompile Include="rectangle.cpp" />
-    <ClCompile Include="shader.cpp" />
-    <ClCompile Include="sphere.cpp" />
-    <ClCompile Include="spot_light.cpp" />
-    <ClCompile Include="texel.cpp" />
-    <ClCompile Include="texture_projector.cpp" />
-    <ClCompile Include="triangle.cpp" />
-    <ClCompile Include="vector2.cpp" />
-    <ClCompile Include="vector3.cpp" />
-    <ClCompile Include="visibility.cpp" />
-  </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>
-    <ProjectGuid>{E73874D2-B013-4A99-9644-73C0C952CE61}</ProjectGuid>
+    <ProjectGuid>{676FA4D1-882E-43B7-838A-4A7AC0CD656D}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
-    <RootNamespace>RTv2CPU</RootNamespace>
-    <WindowsTargetPlatformVersion>10.0.17134.0</WindowsTargetPlatformVersion>
+    <RootNamespace>RTv2Playground</RootNamespace>
+    <WindowsTargetPlatformVersion>10.0.17763.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -93,7 +40,7 @@
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
-    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v141</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
@@ -123,10 +70,10 @@
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -135,13 +82,13 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
   </PropertyGroup>
-  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
-      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
     </ClCompile>
@@ -150,13 +97,13 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
   </ItemDefinitionGroup>
-  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
-      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <PrecompiledHeader>Use</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
     </ClCompile>
@@ -203,6 +150,14 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
   </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="RTv2.Playground.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\RTv2.CPU\RTv2.CPU.vcxproj">
+      <Project>{e73874d2-b013-4a99-9644-73c0c952ce61}</Project>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

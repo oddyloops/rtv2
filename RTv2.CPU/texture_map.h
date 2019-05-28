@@ -19,6 +19,7 @@ struct texture_map
 private:
 	bool _is_mapped; //a flag for determining if texture mapping is enabled for this value
 	bool _is_null;
+	
 
 	bool _is_projection; //used for projection texture mapping
 	vector3 _projection_orig; //origin of texture projection
@@ -34,6 +35,7 @@ private:
 
 	vector2 _wave_direction; //direction of texture wave for wavy map code
 
+	bool _texel_cached = false;
 	T _cached_texel; //used for caching texel values for maps that contain only one texel to avoid re-calculation
 
 public:
@@ -57,7 +59,7 @@ public:
 
 	bool get_is_mapped() const;
 
-	T get_texel(intersection& intersect, std::vector<texture<T, MAX_TEXTURE_HEIGHT, MAX_TEXTURE_WIDTH>>& db_texture) const;
+	T get_texel(intersection& intersect, std::vector<texture<T, MAX_TEXTURE_HEIGHT, MAX_TEXTURE_WIDTH>>& db_texture);
 
 	bool get_is_null() const;
 };
@@ -72,7 +74,7 @@ texture_map<T>::texture_map() : _is_null(true)
 }
 
 template<typename T>
-texture_map<T>::texture_map(T unmapped_texel) : _is_null(false), _is_mapped(false), _cached_texel(unmapped_texel)
+texture_map<T>::texture_map(T unmapped_texel) : _is_null(false), _is_mapped(false), _cached_texel(unmapped_texel), _texel_cached(true)
 {
 
 }
@@ -105,7 +107,7 @@ texture_map<T>::texture_map( vector3 projection_orig, vector3 projection_at, vec
 	float projection_width = projection_aspect_ratio * projection_height;
 
 	//bottom left
-	vector3 projector_origin = (_projection_orig + focus * projection_dir) - (0.5f * projection_width * projection_side) - (0.5f * projection_height * projection_up);
+	vector3 projector_origin = (_projection_orig + projection_focus * projection_dir) - (0.5f * projection_width * projection_side) - (0.5f * projection_height * projection_up);
 	vector3 vertices[4];
 	vertices[0] = projection_orig;
 	vertices[1] = projection_orig + projection_height * projection_up;
@@ -146,7 +148,7 @@ void texture_map<T>::set_two_texels(texel texel1, texel texel2)
 
 
 template<typename T>
-T texture_map<T>::get_texel(intersection& intersect, std::vector<texture<T, MAX_TEXTURE_HEIGHT, MAX_TEXTURE_WIDTH>>& db_texture) const
+T texture_map<T>::get_texel(intersection& intersect, std::vector<texture<T, MAX_TEXTURE_HEIGHT, MAX_TEXTURE_WIDTH>>& db_texture)
 {
 	if (!_is_mapped)
 	{
@@ -159,9 +161,10 @@ T texture_map<T>::get_texel(intersection& intersect, std::vector<texture<T, MAX_
 	if (_map_code == map_codes::plain && _texels[0]._map_width == 1 && _texels[0]._map_height == 1)
 	{
 		//should be cached
-		if (_cached_texel == {0})
+		if (!_texel_cached)
 		{
 			_cached_texel = db_texture[_texels[0]._map_index].get_texel(_texels[0]._map_x_offset, _texels[0]._map_y_offset);
+			_texel_cached = true;
 		}
 		return _cached_texel;
 	}
@@ -171,8 +174,8 @@ T texture_map<T>::get_texel(intersection& intersect, std::vector<texture<T, MAX_
 		intersection project_int;
 		if (_projector.intersect(r, project_int))
 		{
-			x_index = (int)(1 - project_int.u *_texels[texel_index]._map_height); //1 - to switch origin to top left for texture mapping
-			y_index = (int)(project_int.v *_texels[texel_index]._map_width);
+			x_index = (int)(1 - project_int._u *_texels[texel_index]._map_height); //1 - to switch origin to top left for texture mapping
+			y_index = (int)(project_int._v *_texels[texel_index]._map_width);
 		}
 	}
 	else
@@ -188,8 +191,8 @@ T texture_map<T>::get_texel(intersection& intersect, std::vector<texture<T, MAX_
 		}
 		else if (_map_code == map_codes::checkered)
 		{
-			bool x_even = ((u * _check_x_dim) & 1) == 0);
-			bool y_even = ((v * _check_y_dim) & 1) == 0);
+			bool x_even = (((int)(u * _check_x_dim)) & 1) == 0;
+			bool y_even = (((int)(v * _check_y_dim)) & 1) == 0;
 
 			if (x_even)
 			{

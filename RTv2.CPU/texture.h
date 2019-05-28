@@ -6,8 +6,7 @@ template<typename T,int X,int Y>
 struct texture
 {
 private:
-	constexpr int _x_dim;
-	constexpr int _y_dim;
+
 	T data[X][Y];
 
 public:

@@ -176,5 +176,11 @@
     <ClCompile Include="entry.cpp">
       <Filter>Source Files\renderer</Filter>
     </ClCompile>
+    <ClCompile Include="constants.cpp">
+      <Filter>Source Files\globals</Filter>
+    </ClCompile>
+    <ClCompile Include="database.cpp">
+      <Filter>Source Files\globals</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

@@ -143,6 +143,9 @@ bool geometry::intersects(ray r, intersection& intersect, int except_index)
 vector2 geometry::get_uv_at_point(vector3 _point)
 {
 	vector2 uv;
+	vector3 true_normal;
+	vector3 delta_pt;
+	float project;
 	switch (_geom_code)
 	{
 	case geom_codes::rectangle:
@@ -155,9 +158,9 @@ vector2 geometry::get_uv_at_point(vector3 _point)
 		uv = geometry_helpers::get_triangle_uv(_point, _vertices);
 		break;
 	case geom_codes::cylinder:
-		vector3 true_normal;
-		vector3 delta_pt = _point - _center;
-		float project = math_util::dot(delta_pt, _vertical_axis);
+		
+		delta_pt = _point - _center;
+		project = math_util::dot(delta_pt, _vertical_axis);
 		if ((project - _height) < FLT_EPSILON)
 		{
 			//projection of delta pt is less than the height of the cylinder (curved surface)
@@ -180,9 +183,8 @@ vector2 geometry::get_uv_at_point(vector3 _point)
 		uv = geometry_helpers::get_cylinder_uv(_point, _center, _radius, _vertical_axis, true_normal, _height);
 		break;
 	case geom_codes::cone:
-		vector3 true_normal;
-		vector3 delta_pt = _point - _center;
-		float project = math_util::dot(delta_pt, _vertical_axis);
+		delta_pt = _point - _center;
+		project = math_util::dot(delta_pt, _vertical_axis);
 		if ((project - _height) < FLT_EPSILON)
 		{
 			//projection of delta pt is less than the height of the cone (curved surface)

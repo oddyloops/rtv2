@@ -1,8 +1,10 @@
 #ifndef  INTERSECTION_H
 #define INTERSECTION_H
 
+#include <cfloat>
 #include "vector3.h"
 #include "constants.h"
+
 
 struct intersection
 {
