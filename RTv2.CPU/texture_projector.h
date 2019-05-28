@@ -10,6 +10,10 @@ class texture_projector
 {
 	vector3 _vertices[4];
 
+	vector3 _normal;
+	vector3 _u_vec;
+	vector3 _v_vec;
+
 	texture_projector();
 
 	texture_projector(vector3 vertices[4]);

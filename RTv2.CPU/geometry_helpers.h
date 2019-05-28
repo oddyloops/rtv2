@@ -15,6 +15,17 @@ using namespace std;
 class geometry_helpers
 {
 private:
+	
+
+	static bool inside_circle(vector3 pt, vector3 center, float radius)
+	{
+		return (radius * radius) >= (math_util::magnitude_sq(pt - center));
+	}
+
+	
+
+public:
+
 	static bool ray_plane_intersection(const ray& r, vector3 v, vector3 n, float& dist)
 	{
 		//formula for intersection distance t in a plane =( [v(0) - ray_orig].n)/(ray_dir.n)
@@ -28,14 +39,6 @@ private:
 		return false;
 	}
 
-	static bool inside_circle(vector3 pt, vector3 center, float radius)
-	{
-		return (radius * radius) >= (math_util::magnitude_sq(pt - center));
-	}
-
-	
-
-public:
 	static vector2 get_rectangle_uv(vector3 pt, vector3 vertex0, vector3 u_vec, vector3 v_vec);
 
 	static vector2 get_sphere_uv(vector3 pt, vector3 center, float radius, vector3 vertical_axis);
