@@ -65,7 +65,7 @@ vector<vector<vector3>> entry::render(vector<geometry>& geometries, vector<mesh>
 
 
 				bool intersected = visibility::is_visible(r, intersect, UNINIT);
-				if (intersected)
+				if (intersected && intersect._dist <= FAR_PLANE)
 				{
 					visible = true;
 					vector3 temp_color;

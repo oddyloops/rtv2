@@ -8,6 +8,8 @@
 #include "light.h"
 #include "material.h"
 #include "mesh.h"
+#include "geom_codes.h"
+#include "light_codes.h"
 
 
 
